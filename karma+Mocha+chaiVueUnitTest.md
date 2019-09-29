@@ -11,3 +11,12 @@ it('OpinionInput.vue', async () => {
     })
 }
 ```
+
+imitate click
+
+```javascript
+    const clickEvent = new window.Event('click')
+    // 点击下拉框
+    const elselect = vm.$el.querySelector('.el-select')
+    elselect.dispatchEvent(clickEvent)
+```
