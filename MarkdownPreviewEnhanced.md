@@ -17,3 +17,9 @@ using code chunk you should set enable scripts execution (in setting file)
 ```javascript {cmd="node"}
 console.log('hello world')
 ```
+
+```python {cmd=true matplotlib=true}
+import matplotlib.pyplot as plt
+plt.plot([1,2,3, 4])
+plt.show() # show figure
+```
