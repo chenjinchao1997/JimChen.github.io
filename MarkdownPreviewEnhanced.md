@@ -1,7 +1,7 @@
 ---
 markdown:
   image_dir: /assets
-  path: MarkdownPreviewEnhancedoutput.md
+  path: MarkdownPreviewEnhancedOutput.md
   ignore_from_front_matter: true
   absolute_image_path: false
 export_on_save:
@@ -29,6 +29,6 @@ console.log('hello world')
 
 ```python {cmd=true matplotlib=true}
 import matplotlib.pyplot as plt
-plt.plot([1,2,3, 4])
+plt.plot([1,2,3,4])
 plt.show() # show figure
 ```
