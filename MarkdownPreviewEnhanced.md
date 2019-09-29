@@ -8,6 +8,7 @@ export_on_save:
   markdown: true
 ---
 
+# Markdown Preview Enhanced
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 
@@ -17,8 +18,6 @@ export_on_save:
   - [Code Chunk](#code-chunk)
 
 <!-- /code_chunk_output -->
-
-# Markdown Preview Enhanced
 
 ## Code Chunk
 
