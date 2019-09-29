@@ -1,12 +1,22 @@
 ---
 markdown:
   image_dir: /assets
-  path: Markdown_Preview_Enhanced_Output.md
+  path: MarkdownPreviewEnhancedoutput.md
   ignore_from_front_matter: true
   absolute_image_path: false
 export_on_save:
   markdown: true
 ---
+
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+- [Markdown Preview Enhanced](#markdown-preview-enhanced)
+  - [Code Chunk](#code-chunk)
+
+<!-- /code_chunk_output -->
 
 # Markdown Preview Enhanced
 
