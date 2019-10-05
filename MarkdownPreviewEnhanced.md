@@ -1,7 +1,6 @@
 ---
 markdown:
   image_dir: /assets
-  path: MarkdownPreviewEnhancedOutput.md
   ignore_from_front_matter: true
   absolute_image_path: false
 export_on_save:
