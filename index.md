@@ -13,3 +13,7 @@ record my study using markdown and store the .md file in here
 ### Golang
 
 [Best Pratice of Type Conversion](./BestPraticeofTypeConversion.md)
+
+### Algorithm
+
+[最快的fibonacci Number](./6.048J.md)

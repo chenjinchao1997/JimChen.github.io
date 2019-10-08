@@ -10,7 +10,7 @@ func main() {
 	rs := power(m1, n-2)
 	fmt.Println(rs)
 
-	fmt.Println(fab(n))
+	fmt.Println(fib(n))
 }
 
 type timer interface {
@@ -60,7 +60,7 @@ func (m1 matrix) time(t timer) timer {
 	return rs
 }
 
-func fab(n int) int {
+func fib(n int) int {
 	if n == 1 {
 		return 0
 	}
