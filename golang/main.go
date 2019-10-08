@@ -6,34 +6,45 @@ import (
 
 func main() {
 	m1 := matrix{{1, 1}, {1, 0}}
-	rs := m1.time(m1)
+	n := 5
+	rs := power(m1, n-2)
 	fmt.Println(rs)
 
+	fmt.Println(fab(n))
 }
 
 type timer interface {
 	time(x timer) timer
 }
 
-func power(number timer, n int) timer {
-	result := number
-	for i := 0; i < n; i++ {
-		result = result.time(result)
+func power(t timer, n int) timer {
+	if n == 1 {
+		return t
 	}
-	return result
+	if n%2 == 0 {
+		half := power(t, n/2)
+		rs := half.time(half)
+		return rs
+	}
+	if n%2 == 1 {
+		half := power(t, (n-1)/2)
+		rs := half.time(half).time(t)
+		return rs
+	}
+	return nil
 }
-
-// type matrix struct {
-// 	data [][]int
-// }
 
 type matrix [][]int
 
-func (m1 matrix) time(m2 matrix) matrix {
+func (m1 matrix) time(t timer) timer {
+	m2, ok := t.(matrix)
+	if !ok {
+		return nil
+	}
 	col := len(m1)
 	row := len(m2[0])
 	k := len(m1[0])
-	var rs [][]int
+	var rs matrix
 	for i := 0; i < col; i++ {
 		tmp := make([]int, row)
 		rs = append(rs, tmp)
@@ -49,22 +60,20 @@ func (m1 matrix) time(m2 matrix) matrix {
 	return rs
 }
 
-type matrix2_2 struct {
-	data [2][2]int
-}
-
-func (m1 *matrix2_2) time(m2 matrix2_2) matrix2_2 {
-
-	var rs [2][2]int
-
-	for c := 0; c < 2; c++ {
-		for r := 0; r < 2; r++ {
-			for i := 0; i < 2; i++ {
-				rs[c][r] += m1.data[c][i] * m2.data[i][r]
-			}
-		}
+func fab(n int) int {
+	if n == 1 {
+		return 0
 	}
-	return matrix2_2{
-		data: rs,
+	if n == 2 {
+		return 1
 	}
+	var fn, fn1, fn2 int
+	fn1 = 1
+	fn2 = 0
+	for i := 3; i <= n; i++ {
+		fn = fn1 + fn2
+		fn2 = fn1
+		fn1 = fn
+	}
+	return fn
 }
