@@ -17,3 +17,7 @@ record my study using markdown and store the .md file in here
 ### Algorithm
 
 [最快的fibonacci Number](./6.048J.md)
+
+### Database
+
+索引类型不一致
