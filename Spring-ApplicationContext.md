@@ -11,6 +11,7 @@ MessageSource, ApplicationEventPublisher, ResourcePatternResolver {...}
 
 就是具有getEnvironment()方法返回一个Environment。[Environment](./Empty.md)主要包含了ApplicationContext里的profiles和properties。（Models two key aspects of the application environment: profiles and properties）
 关于profile和properties：
+
 > A profile is a named, logical group of bean definitions to be registered with the container only if the given profile is active. Beans may be assigned to a profile whether defined in XML or via annotations; see the spring-beans 3.1 schema or the @Profile annotation for syntax details. The role of the Environment object with relation to profiles is in determining which profiles (if any) are currently active, and which profiles (if any) should be active by default.
 > Properties play an important role in almost all applications, and may originate from a variety of sources: properties files, JVM system properties, system environment variables, JNDI, servlet context parameters, ad-hoc Properties objects, Maps, and so on. The role of the environment object with relation to properties is to provide the user with a convenient service interface for configuring property sources and resolving properties from them.
 
