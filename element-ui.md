@@ -21,12 +21,30 @@ const expandOrCollapseAllNote = (root, expanded) => {
 
 ```vue
 <script>
-const expandOrCollapseAllNote = (root, expanded) => {
+const _expandOrCollapseAllNote = (root, expanded) => {
   let nodes = root.childNodes
   nodes.forEach((element, index) => {
     nodes[index].expanded = expanded
-    expandOrCollapseAllNote(nodes[index], expanded)
+    _expandOrCollapseAllNote(nodes[index], expanded)
   })
+}
+
+const _expandLevel = (root, level) => {
+  if (root.level === level) {
+    root.expanded = true
+  } else {
+    let nodes = root.childNodes
+    nodes.forEach((element, index) => {
+      _expandLevel(nodes[index], level)
+    })
+  }
+}
+
+const _expandSelfAndParents = (leaf) => {
+  if (leaf) {
+    leaf.expanded = true
+    if (leaf.parent) _expandSelfAndParents(leaf.parent)
+  }
 }
 
 export default {
@@ -36,19 +54,23 @@ export default {
         <div {...{
           class: {
             'flex-col-item': true,
-            'flex-grow-item': true
+            'flex-grow-item': true,
+            'border': true
           },
           style: {
-            'overflow': 'scroll',
-            'height': '0'
+            'overflow': 'auto'
           }
         }}>
           <el-tree
             renderContent={ this.renderContent }
-            default-expand-all={ true }
+            render-after-expand={ false }
             {...{
               props: this.$attrs,
-              attrs: this.$attrs
+              attrs: this.$attrs,
+              on: this.$listeners,
+              style: {
+                width: '100%'
+              }
             }}
             ref="tree"
           ></el-tree>
@@ -60,10 +82,22 @@ export default {
           }
         }}>
           <el-input
+            placeholder="请搜索您要的内容"
             v-model={ this.value }
             {...{
-              props: this.$attrs,
-              attrs: this.$attrs
+              // props: this.$attrs,
+              // attrs: this.$attrs,
+              style: {
+                width: 'fit-content'
+              },
+              nativeOn: {
+                'keyup': (e) => {
+                  if (e.keyCode === 13) {
+                    this.currentHighlightSpanIndex += 1
+                    this.focusOnHighlight()
+                  }
+                }
+              }
             }}
             size="mini">
             <template slot="append">
@@ -81,7 +115,8 @@ export default {
       </div>
     )
   },
-  props: {},
+  props: {
+  },
   data () {
     return {
       value: '',
@@ -90,16 +125,32 @@ export default {
     }
   },
   mounted () {
-    window.tree = this
   },
   methods: {
     focusOnHighlight () {
-      expandOrCollapseAllNote(this.$refs.tree.root, true)
+      // _expandOrCollapseAllNote(this.$refs.tree.root, true)
       let node = this.currentHighlightSpan
       if (node == null) return
+      let key = node.attributes.key.nodeValue
+      let tNode = this.$refs.tree.getNode(key)
+      if (tNode.parent) _expandSelfAndParents(tNode.parent)
+      let click = document.createEvent('HTMLEvents')
+      click.initEvent('click', true, true)
+      node.dispatchEvent(click)
 
-      console.debug(node)
-      node.scrollIntoViewIfNeeded()
+      node.scrollIntoView({
+        behavior: 'auto',
+        block: 'start',
+        inline: 'nearest'
+      })
+    },
+    expandLevel (level) {
+      if (level !== 0) {
+        _expandLevel(this.$refs.tree.root, level)
+      }
+    },
+    expandOrCollapseAllNote (isExpand) {
+      _expandOrCollapseAllNote(this.$refs.tree.root, true)
     }
   },
   watch: {
@@ -112,19 +163,27 @@ export default {
         this.currentHighlightSpanIndex = 0
         this.focusOnHighlight()
       })
+    },
+    currentHighlightSpan (newVal, preVal) {
+      if (preVal) preVal.firstElementChild.className = 'include-keyword'
+      newVal.firstElementChild.className = 'include-keyword focus-include-keyword'
     }
   },
   computed: {
     renderContent () {
       return (h, {data, node, store}) => {
         return (
-          <span>{
-            this.value === ''
-              ? node.label
-              : node.label.indexOf(this.value) !== -1
-                ? <font class="include-keyword">{node[this.label]}</font>
-                : node.label
-          }</span>
+          <span {...{
+            attrs: {
+              'key': node.key
+            }
+          }}>{
+              this.value === ''
+                ? node.label
+                : node.label.indexOf(this.value) !== -1
+                  ? <font class="include-keyword">{ node.label }</font>
+                  : node.label
+            }</span>
         )
       }
     },
@@ -144,18 +203,20 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-/deep/ .include-keyword {
+<style lang="scss">
+.include-keyword {
   font-weight: bold;
-  background: orange;
+  background: #ffcc00;
+}
+.focus-include-keyword {
+  background: #ff6600;
 }
 
 * {
   box-sizing: border-box;
 }
 
-/deep/ .flex-row-container {
-  width: 100%;
+.flex-row-container {
   display: flex;
   overflow: hidden;
   flex-direction: row;
@@ -163,32 +224,30 @@ export default {
   align-items: stretch;
 }
 
-/deep/ .flex-col-container {
-  height: 100%;
+.flex-col-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
 }
 
-/deep/ .flex-row-item+.flex-row-item {
+.flex-row-item+.flex-row-item {
   margin: 0px;
   margin-left: 5px;
 }
 
-/deep/ .flex-col-item+.flex-col-item {
+.flex-col-item+.flex-col-item {
   margin: 0px;
   margin-top: 5px;
 }
 
-/deep/ .flex-fixed-item {
+.flex-fixed-item {
   flex-grow: 0;
   flex-shrink: 0;
 }
 
-/deep/ .flex-grow-item {
+.flex-grow-item {
   flex-grow: 2;
-  flex-shrink: 0;
 }
 </style>
 ```
