@@ -17,6 +17,24 @@ const expandOrCollapseAllNote = (root, expanded) => {
 }
 ```
 
+## el-tree getNode获取不到值
+
+直接首先说原因：动了对应节点中，注册在el-tree上id对应的值。
+
+el-tree getCheckedKeys() 和 getCheckedNodes() 都返回了值，但是使用getCheckedKeys()中的值key getNode(key) 的时候返回空。
+这是由于getNode方法指向 tree.store.nodesMap ，其中由于刚刚更新了选中数据的值，注意这时候我修改了数据的id（注册到tree所使用的id）。tree.store.nodesMap 中并无对应的key-value对。继续深入，发现nodesMap由registerNode和deregisterNode管理，只有el-tree 文档上的操作（remove、append等）才会触发相应的registerNode方法。
+
+所以解决方法是 如果非要动节点的id对应值，动了之后直接调用registerNode注册一遍原节点
+
+```javascript
+// 动了id
+Object.assign(rNode.data, newlNodeData)
+// 注册一下
+this.tree.store.registerNode(rNode)
+```
+
+那为什么 getCheckedKeys() 和 getCheckedNodes() 能获取正确的值呢？ 因为getCheckedKeys实际指向getCheckedNodes， 而getCheckedNodes是使用递归的方式，从根节点一个个检查是否勾选而最终组织数据返回的。
+
 ## 带定位功能的el-tree LocateTree
 
 ```vue
