@@ -21,16 +21,20 @@ const expandOrCollapseAllNote = (root, expanded) => {
 
 直接首先说原因：动了对应节点中，注册在el-tree上id对应的值。
 
-el-tree getCheckedKeys() 和 getCheckedNodes() 都返回了值，但是使用getCheckedKeys()中的值key getNode(key) 的时候返回空。
-这是由于getNode方法指向 tree.store.nodesMap ，其中由于刚刚更新了选中数据的值，注意这时候我修改了数据的id（注册到tree所使用的id）。tree.store.nodesMap 中并无对应的key-value对。继续深入，发现nodesMap由registerNode和deregisterNode管理，只有el-tree 文档上的操作（remove、append等）才会触发相应的registerNode方法。
+el-tree getCheckedKeys() 和 getCheckedNodes() 都返回了值，但是使用getCheckedKeys()中的值key调用getNode(key) 的时候返回空。
+这是由于getNode方法指向 tree.store.nodesMap ，其中由于刚刚更新了选中数据的值，注意这时候我修改了数据的id（注册到tree所使用的id）。tree.store.nodesMap 中并无对应的key-value对。继续深入，发现nodesMap由registerNode和deregisterNode管理，除了初始构建树时，后续只有 el-tree 文档上的操作（remove、append等）才会触发相应的registerNode方法。
 
 所以解决方法是 如果非要动节点的id对应值，动了之后直接调用registerNode注册一遍原节点
 
 ```javascript
+Node.data
+// {id:1, label:'1'}
+newNodeData
+// {id:2, label:'2'}
 // 动了id
-Object.assign(rNode.data, newlNodeData)
+Object.assign(Node.data, newNodeData)
 // 注册一下
-this.tree.store.registerNode(rNode)
+this.tree.store.registerNode(Node)
 ```
 
 那为什么 getCheckedKeys() 和 getCheckedNodes() 能获取正确的值呢？ 因为getCheckedKeys实际指向getCheckedNodes， 而getCheckedNodes是使用递归的方式，从根节点一个个检查是否勾选而最终组织数据返回的。
@@ -174,7 +178,7 @@ export default {
   watch: {
     value (val) {
       this.$nextTick(() => {
-        let list = document.querySelectorAll('font.include-keyword')
+        let list = this.$el.querySelectorAll('font.include-keyword')
         list = Array.of(...list)
         this.nodesIncludeKeyword = list.map(node => node.parentElement)
 
@@ -279,6 +283,8 @@ export default {
 //   pidname: 'pcompid',
 //   childrenname: 'children'
 // }
+
+// 有尾部优化的空间
 
 export function tree2Flat (props, treeData) {
   let flatData = []

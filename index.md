@@ -2,6 +2,10 @@
 
 record my study using markdown and store the .md file in here
 
+## ES6
+
+[ES6](./ES6.md)
+
 ## Vue
 
 [karma+Mocha+chai Vue Unit Test](./karma+Mocha+chaiVueUnitTest.md)
