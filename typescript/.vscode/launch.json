@@ -11,9 +11,9 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/leetcode/solution.ts",
+            "program": "${workspaceFolder}/solution.ts",
             "outFiles": [
-                "${workspaceFolder}/leetcode/solution.js"
+                "${workspaceFolder}/**/*.js"
             ]
         }
     ]
