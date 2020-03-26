@@ -4,7 +4,7 @@
  * @return {boolean}
  */
 const isMatch = function(s: string, p: string): boolean {
-    let i, j: number = 0
+    let i: number, j: number = 0
     let atomReg: string
 
     while (i < s.length && j < p.length) {
@@ -28,7 +28,7 @@ function compareChar(a: string, reg: string) {
     else return false
 }
 
-function findAtomReg(s: string, i): string {
+function findAtomReg(s: string, i: number): string {
     if (s[i + 1] === '*') {
         return s[i] + '*'
     } else {
@@ -59,3 +59,5 @@ function matchUntil(s: string, from: number, reg: string): number {
         }
     }
 }
+
+console.log(isMatch('aa', '.*'))
