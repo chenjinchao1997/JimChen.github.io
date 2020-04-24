@@ -1,7 +1,7 @@
 function greeter(person) {
     return 'Hello ' + person;
 }
-var p = 'cjc';
+let p = 'cjc';
 console.log(greeter(p));
-var array;
+let array;
 //# sourceMappingURL=hello.js.map
