@@ -771,7 +771,7 @@ function _inherits(subClass, superClass) {
   // Object.create(superClass && superClass.prototype) 的结果是 {__proto__: [superClass.prototype]}
 
   // Object.create的第二个参数是propertiesObject 这些属性对应Object.defineProperties()的第二个参数
-  // 这里的第二个参数目的是将constructor置为subClass
+  // 这里的第二个参数目的是将constructor置为subClass {__proto__: [superClass.prototype], constuctor: subClass }
   subClass.prototype = Object.create(superClass && superClass.prototype, {
     constructor: { value: subClass, writable: true, configurable: true },
   });
@@ -809,14 +809,34 @@ function _createSuper(Derived) {
     var Super = _getPrototypeOf(Derived),
       result;
     if (hasNativeReflectConstruct) {
+      // 获取实例的constructor 即SubClass
       var NewTarget = _getPrototypeOf(this).constructor;
       // result将会是NewTarget 即SubClass类型
       result = Reflect.construct(Super, arguments, NewTarget);
     } else {
       result = Super.apply(this, arguments);
     }
+    // 这里如果result 是走Reflect那一个分支 这里result是一个对象 将会在_possibleConstructorReturn中直接被返回出去
+    // 下面那个分支result将会是undefined 将会在_possibleConstructorReturn走_assertThisInitialized分支检查是否已经初始化
     return _possibleConstructorReturn(this, result);
   };
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+  // 检查是否已经初始化
+  return _assertThisInitialized(self);
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError(
+      "this hasn't been initialised - super() hasn't been called"
+    );
+  }
+  return self;
 }
 
 // 这个函数测试是否存在NativeReflectConstruct
@@ -865,4 +885,34 @@ OneClass.apply(obj2, /* args */ []);
 
 obj1 instanceof OneClass; // false
 obj2 instanceof OneClass; // false
+```
+
+接下在 A 实例化过程中：
+
+```javascript
+function B(name, id) {
+  var _this;
+
+  ...
+
+  // 这里将会调用上面所准备的_super函数
+  _this = _super.call(this, name);
+
+  ...
+
+  _this.id = id;
+  // 注意这里返回了_this
+  return _this;
+}
+```
+
+函数 B 最后返回 `_this` 会让人感觉很奇怪。因为我们调用 B 函数使用的是 `new` 关键字，但是实际上 `new` 所触发的函数如果返回值是一个对象，则 new 整个式子也会返回这个对象。
+
+```javascript
+function NewType() {
+  this.msg = "this msg";
+  return { msg: "obj msg" };
+}
+var n = new NewType();
+n.msg; // "obj msg"
 ```
