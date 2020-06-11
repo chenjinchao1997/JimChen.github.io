@@ -6,7 +6,7 @@ record my study using markdown and store the .md file in here
 
 [ES6](./ES6.md)
 
-[babel 是如何实现继承以及各种类特性](./babel%20是如何实现继承以及各种类特性.md)
+[babel 是如何实现继承以及各种类特性](./babel是如何实现继承以及各种类特性.md)
 
 ## LeetCode
 
@@ -14,7 +14,7 @@ record my study using markdown and store the .md file in here
 
 ## Vue
 
-[从 vue-rx 源码分析 vue 自定义插件]()
+[从 vue-rx 源码分析 vue 自定义插件](./从vue-rx源码分析vue插件.md)
 
 [element-ui 相关](./element-ui.md)
 
