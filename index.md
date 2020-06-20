@@ -2,15 +2,13 @@
 
 record my study using markdown and store the .md file in here
 
-## ES6
-
-[ES6](./ES6.md)
-
-[babel 是如何实现继承以及各种类特性](./babel是如何实现继承以及各种类特性.md)
-
 ## LeetCode
 
 [803.打砖块](./leetcode/803.打砖块.md)
+
+## 翻译
+
+[翻译：为什么 Kafka 不适合做 EventSourcing](./翻译：为什么Kafka不适合做EventSourcing.md)
 
 ## Vue
 
@@ -64,3 +62,9 @@ record my study using markdown and store the .md file in here
 ## MQ
 
 [MQ](./mq.md)
+
+## ES6
+
+[ES6](./ES6.md)
+
+[babel 是如何实现继承以及各种类特性](./babel是如何实现继承以及各种类特性.md)
