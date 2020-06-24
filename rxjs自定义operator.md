@@ -1,6 +1,4 @@
-# rxjs
-
-## 自定义 operator
+# rxjs 自定义 operator
 
 查看 rxjs 源码，我们取一个比较简单的操作符 `every` 作为例子。从 every 的实现可以看到，every 函数调用 source 的 lift 函数，传入自定义的两个类 EveryOperator 和 EverySubscriber。接下来看代码注释。
 

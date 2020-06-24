@@ -20,6 +20,10 @@ record my study using markdown and store the .md file in here
 
 [karma+Mocha+chai Vue Unit Test](./karma+Mocha+chaiVueUnitTest.md)
 
+## rxjs
+
+[rxjs 自定义 operator](./rxjs自定义operator.md)
+
 ## Algorithm
 
 [斐波那契数列](./QuickFib.html)
