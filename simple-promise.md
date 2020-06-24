@@ -1,3 +1,6 @@
+# 简单的 promise 实现
+
+```javascript
 const RESOLVED = "resolved";
 const PENDING = "pending";
 
@@ -71,3 +74,4 @@ let p = new MyPromise((resolve) => {
 // 0ms:
 // 1000ms: 100
 // 2000ms: 101 102
+```
