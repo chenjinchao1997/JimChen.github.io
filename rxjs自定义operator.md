@@ -169,5 +169,6 @@ class SquareOperator {
     });
   }
 }
-const square = () => (source) => source.lift(new SquareOperator(source));
+const square = () => (source, thisArg) =>
+  source.lift(new SquareOperator(thisArg, source));
 ```
