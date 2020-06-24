@@ -8,7 +8,7 @@ record my study using markdown and store the .md file in here
 
 ## 翻译
 
-[翻译：为什么 Kafka 不适合做 EventSourcing](./翻译：为什么Kafka不适合做EventSourcing.md)
+[翻译：为什么 Kafka 不适合做 EventSourcing](./kafka-is-not-for-event-sourcing.md)
 
 ## Vue
 
