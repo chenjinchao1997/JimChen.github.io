@@ -1,5 +1,7 @@
 # 简单的 promise 实现
 
+没做 catch，如果理解了下面代码，catch 不难实现。
+
 ```javascript
 const RESOLVED = "resolved";
 const PENDING = "pending";
