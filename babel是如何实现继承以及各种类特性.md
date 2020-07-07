@@ -767,7 +767,7 @@ function _inherits(subClass, superClass) {
 
   // Object.create将父类prototype上的方法**链接**到子类prototype上
 
-  // 首先superClass && superClass.prototype 的结果是 superClass.prototype
+  // 首先 superClass && superClass.prototype 的结果是 superClass.prototype
   // Object.create(superClass && superClass.prototype) 的结果是 {__proto__: [superClass.prototype]}
 
   // Object.create的第二个参数是propertiesObject 这些属性对应Object.defineProperties()的第二个参数
