@@ -16,7 +16,8 @@ record my study using markdown and store the .md file in here
 
 [element-ui 相关](./element-ui.md)
 
-[Vue 中父组件引用多个相同子组件方法](./Vue中父组件引用多个相同子组件方法.md)
+[vue 插件国际化方案](./vue插件国际化方案.md)
+[Vue 隐藏工具——Vue.util](./Vue隐藏工具Vue.util.md)
 
 [karma+Mocha+chai Vue Unit Test](./karma+Mocha+chaiVueUnitTest.md)
 
